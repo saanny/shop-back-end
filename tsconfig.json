@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "target": "es5",
+        "types": [
+            "node",
+            "jest"
+        ],
+        "typeRoots": [
+            "node_modules/@types",
+            "@types"
+        ]
+    },
+    "include": ["./src/**/*.ts","@types/express/index.d.ts"],
+    "exclude":[
+        "./src/public/",
+        "node_modules"
+    ]
+}
