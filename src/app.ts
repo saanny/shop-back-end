@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import "./infrastructure/connections/postgre";
+import "./infrastructure/connections/mongoose";
 import RouteService from "./router/routeService";
 class App {
     public app: Application;
@@ -17,7 +17,6 @@ class App {
         this.app.listen(this.port, () => {
             console.log(`app is running on port ${this.port}`);
         });
-
     }
 }
 
