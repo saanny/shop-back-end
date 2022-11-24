@@ -1,9 +1,7 @@
 import * as bodyParser from "body-parser";
-import compression from "compression";
 import cors from "cors";
 import express, { Application } from "express";
 import mongoSanitize from "express-mongo-sanitize";
-import hpp from "hpp";
 import path, { resolve } from "path";
 
 
@@ -29,6 +27,6 @@ export default function boot(app: Application) {
         })
     );
     app.use(cors(corsOptions));
-    // app.use(mongoSanitize());
+    app.use(mongoSanitize());
 
 }

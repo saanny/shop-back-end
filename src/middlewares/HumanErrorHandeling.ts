@@ -1,22 +1,25 @@
 import { Application, NextFunction, Request, Response } from "express";
 import { NODE_ENV } from "../conf";
 import AppError from "../utils/AppError";
+
 const handleCastErrorDB = (err: any) => {
   const message = `${err.path} : ${err.value} این مقدار وارد شده صحیح نمیباشد `;
   return new AppError(message, 400);
 };
+
 const handleDuplicateFieldDB = (err: any) => {
-  console.log(err);
   const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
   const message = ` مقدار  ${value} وارد شده قبلا در دیتابیس ثبت شده است`;
 
   return new AppError(message, 400);
 };
+
 const handleValidationErrorDB = (err: any) => {
   const errors = Object.values(err.errors).map((el: any) => el.message);
   const message = `${errors.join(". ")}`;
   return new AppError(message, 400);
 };
+
 const sendErrorForDev = (err: any, res: Response) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -25,6 +28,7 @@ const sendErrorForDev = (err: any, res: Response) => {
     stack: err.stack,
   });
 };
+
 const handleJwtError = () =>
   new AppError(
     "توکن ارسالی شما صحیح نمی باشد لطفا دوباره عملیات ورود را انجام دهید",

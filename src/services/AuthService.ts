@@ -13,9 +13,6 @@ const signToken = (id: string) => {
         }
     );
 };
-let randomTokenCreator = function (low: number, high: number) {
-    return Math.floor(Math.random() * (high - low) + low);
-};
 
 export const createAndSendToken = (
     user: any,

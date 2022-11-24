@@ -21,6 +21,7 @@ class App {
         this.router.run();
         notFoundHandler(this.app);
         HumanErrorHandleing(this.app);
+
         this.app.listen(this.port, () => {
             console.log(`app is running on port ${this.port}`);
         });

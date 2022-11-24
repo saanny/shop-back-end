@@ -45,7 +45,7 @@ export default class UserMongoRepository implements IUserRepository {
     }
 
     public async create(params: any): Promise<IUser> {
-        console.log(params)
+
         const newUser = new UserModel({ ...params });
         await newUser.save();
         return newUser;
