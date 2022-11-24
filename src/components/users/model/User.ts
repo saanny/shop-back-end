@@ -3,27 +3,17 @@ import crypto from "crypto";
 import { model, Schema } from "mongoose";
 import addressSchema from "./Address";
 import IUser from "./IUser";
-import Roles from "./Roles";
 const userSchema: Schema = new Schema(
   {
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    mobile: { type: String, required: true, unique: true },
-    total_orders: { type: Number, required: true, default: 0 },
-    tokenVersion: { type: Number, required: true, default: 0 },
     addresses: { type: [addressSchema] },
     password: {
       type: String,
       select: false,
       minlength: 8,
     },
-    role: {
-      type: String,
-      enum: Roles,
-      default: Roles.CUSTOMER,
-    },
-    wallet: { type: Number, required: true, default: 0 },
     created_at: { type: Date, default: Date.now },
     passwordChangedAt: Date,
     passwordResetToken: String,
@@ -48,23 +38,24 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.correctPassword = async function (
-  candidatePassword,
-  userPassword
+  candidatePassword: string,
+  userPassword: string
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
-  if (this.passwordChangedAt) {
-    const changedTimeStamp = parseInt(
-      this.passwordChangedAt.getTime() / 1000,
-      10
-    );
-    return JWTTimestamp < changedTimeStamp;
-  }
-  // false not changed
-  return false;
-};
+// userSchema.methods.changedPasswordAfter = function (JWTTimestamp: number) {
+//   if (this.passwordChangedAt) {
+//     const passwordTime = this.passwordChangedAt.getTime();
+//     const changedTimeStamp = parseInt(
+//       passwordTime / 1000,
+//       10
+//     );
+//     return JWTTimestamp < changedTimeStamp;
+//   }
+//   // false not changed
+//   return false;
+// };
 
 userSchema.methods.createPasswordResetToken = function () {
   const restToken = crypto.randomBytes(32).toString("hex");

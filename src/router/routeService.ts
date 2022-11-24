@@ -1,4 +1,5 @@
 import { Application, Router } from "express";
+import authRouter from "../components/Auth/Router";
 import RouteEngine from "./router";
 
 class RouteService {
@@ -11,7 +12,7 @@ class RouteService {
   }
 
   public bindRouters() {
-
+    this.router.registerRouter("/api/v1/auth", authRouter);
 
   }
 

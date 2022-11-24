@@ -1,6 +1,10 @@
 import express, { Application } from "express";
+import boot from "./boot";
 import "./infrastructure/connections/mongoose";
+import notFoundHandler from "./middlewares/404";
+import HumanErrorHandleing from "./middlewares/HumanErrorHandeling";
 import RouteService from "./router/routeService";
+
 class App {
     public app: Application;
     private router: RouteService;
@@ -12,8 +16,11 @@ class App {
         this.router = new RouteService(this.app);
     }
 
-    public async start() {
+    public start(): void {
+        boot(this.app);
         this.router.run();
+        notFoundHandler(this.app);
+        HumanErrorHandleing(this.app);
         this.app.listen(this.port, () => {
             console.log(`app is running on port ${this.port}`);
         });
