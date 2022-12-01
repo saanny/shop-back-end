@@ -12,6 +12,25 @@ export default class AuthController {
         this.userRepository = new UserRepository();
 
     }
+    public getMe = (req: any, res: Response, next: NextFunction) => {
+        req.params.id = req.user.id;
+        next();
+    };
+
+    public getUser = catchAsync(
+        async (req: Request, res: Response, next: NextFunction) => {
+            const result = await this.userRepository.findOne(req.params.id);
+            if (!result) {
+                return next(new AppError("سندی با این ایدی یافت نشد", 404));
+            }
+            res.status(200).json({
+                status: "success",
+                data: {
+                    result,
+                },
+            });
+        }
+    );
 
     public register = catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {
@@ -47,19 +66,6 @@ export default class AuthController {
         }
     );
 
-    public getUser = catchAsync(
-        async (req: Request, res: Response, next: NextFunction) => {
-            const result = await this.userRepository.findOne(req.params.id);
-            if (!result) {
-                return next(new AppError("سندی با این ایدی یافت نشد", 404));
-            }
-            res.status(200).json({
-                status: "success",
-                data: {
-                    result,
-                },
-            });
-        }
-    );
+
 
 }
