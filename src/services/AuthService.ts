@@ -2,7 +2,6 @@ import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
-import { promisify } from "util";
 import UsersRepository from "../components/users/repositories/UserMongoRepository";
 import IUserRepository from "../components/users/repositories/IUserRepository";
 
@@ -56,17 +55,6 @@ export const protect = catchAsync(
         if (!freshUser) {
             return next(new AppError("کاربر مربوط به این توکن پیدا نشد", 401));
         }
-
-        // if (freshUser.changedPasswordAfter(decoded.iat)) {
-        //     return next(
-        //         new AppError(
-        //             "کاربر دریافت شده پسورد خود را تغییر داده است ، لطفا دوباره عملیات ورود را انجام دهید ",
-        //             401
-        //         )
-        //     );
-        // }
-
-        // GRANT ACCESS TO PROTECTED ROUTE
         req.user = freshUser;
 
         next();

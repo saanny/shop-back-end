@@ -3,7 +3,7 @@ import cors from "cors";
 import express, { Application } from "express";
 import mongoSanitize from "express-mongo-sanitize";
 import path, { resolve } from "path";
-
+import morgan from 'morgan'
 
 const corsOptions = {
     origin: "*",
@@ -16,8 +16,7 @@ export default function boot(app: Application) {
     app.use(express.static(resolve("public")));
     app.set("view engine", "pug");
     app.set("views", express.static(path.join(__dirname, "../../views")));
-
-    // app.use(helmet());
+    app.use(morgan("dev"))
 
     app.use(bodyParser.json());
 

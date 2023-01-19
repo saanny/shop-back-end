@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { protect } from "../../services/AuthService";
+import { inputValidator } from "../../utils/InputValidator";
 import AuthController from "./Controller";
-
+import { inputLogin, inputRegister } from './ValidationSchema'
 const AuthControllerInstance = new AuthController();
 const authRouter: Router = Router();
 
-authRouter.post("/register", AuthControllerInstance.register);
-authRouter.post("/login", AuthControllerInstance.login);
+authRouter.post("/register", inputValidator(inputRegister), AuthControllerInstance.register);
+authRouter.post("/login", inputValidator(inputLogin), AuthControllerInstance.login);
 
 authRouter.get(
     "/me",

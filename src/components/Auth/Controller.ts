@@ -10,8 +10,8 @@ export default class AuthController {
 
     constructor() {
         this.userRepository = new UserRepository();
-
     }
+
     public getMe = (req: any, res: Response, next: NextFunction) => {
         req.params.id = req.user.id;
         next();
@@ -50,11 +50,6 @@ export default class AuthController {
         async (req: Request, res: Response, next: NextFunction) => {
             const { email, password } = req.body;
 
-            if (!email || !password) {
-                return next(
-                    new AppError("لطفا ایمیل و کلمه عبور خود را وارد نمایید ", 400)
-                );
-            }
             const user: any = await this.userRepository.findByEmail(email);
 
             if (!user || !(await user.correctPassword(password, user.password))) {
@@ -65,6 +60,8 @@ export default class AuthController {
             createAndSendToken(user, 200, res);
         }
     );
+
+
 
 
 
