@@ -8,6 +8,8 @@ export default interface IUser extends Document {
   password: String;
   created_at?: Date;
   passwordChangedAt: Date;
-  passwordResetToken: String;
-  passwordResetExpires: Date;
+  passwordResetToken: String | undefined;
+  passwordResetExpires: Date | undefined;
+  correctPassword: Function;
+  createPasswordResetToken: Function;
 }

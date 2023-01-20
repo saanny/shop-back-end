@@ -15,7 +15,27 @@ const inputLogin = {
         password: Joi.string().min(8).required()
     },
 };
+
+const inputResetPassword = {
+    params: {
+        token: Joi.string().required(),
+    },
+};
+const inputUpdatePassword = {
+    body: {
+        currentPassword: Joi.string().min(8).required(),
+        password: Joi.string().min(8).required(),
+    },
+};
+const inputForgotPassword = {
+    body: {
+        email: Joi.string().required(),
+    },
+};
 export {
     inputLogin,
-    inputRegister
+    inputRegister,
+    inputResetPassword,
+    inputUpdatePassword,
+    inputForgotPassword
 }
