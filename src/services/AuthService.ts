@@ -31,6 +31,7 @@ export const createAndSendToken = (
         token,
     });
 };
+
 const usersRepository: IUserRepository = new UsersRepository();
 
 export const protect = catchAsync(

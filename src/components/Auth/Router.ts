@@ -22,8 +22,8 @@ authRouter.patch(
     AuthControllerInstance.updatePassword
 );
 
-authRouter.post("/forgotPassword", inputValidator(inputForgotPassword), AuthControllerInstance.forgotPassword);
-authRouter.post("/restPassword/:token", inputValidator(inputResetPassword), AuthControllerInstance.resetPassword);
+authRouter.post("/forgot-password", inputValidator(inputForgotPassword), AuthControllerInstance.forgotPassword);
+authRouter.post("/rest-password/:token", inputValidator(inputResetPassword), AuthControllerInstance.resetPassword);
 
 
 export default authRouter;

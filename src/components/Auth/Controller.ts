@@ -93,6 +93,7 @@ export default class AuthController {
 
         try {
             const resetURL = `${process.env.APP_FRONT_URL}/auth/reset-password/${resetToken}`;
+            console.log(resetURL)
             // await new Email(user,resetURL).sendResetPassword();
 
             res.status(200).send({
