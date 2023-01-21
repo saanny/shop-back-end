@@ -83,6 +83,7 @@ export default class ProductMongoRepository implements IProductRepository {
             .sort({ price: -1 })
             .limit(1)
             .then((product) => (product[0] ? product[0].price : 0));
+
         return Promise.all([minQuery, maxQuery]).then((result) => {
             return {
                 min: result[0],

@@ -15,6 +15,7 @@ authRouter.get(
     AuthControllerInstance.getMe,
     AuthControllerInstance.getUser
 );
+
 authRouter.patch(
     "/updatePassword",
     protect,

@@ -20,6 +20,9 @@ const inputResetPassword = {
     params: {
         token: Joi.string().required(),
     },
+    body: {
+        password: Joi.string().min(8).required()
+    }
 };
 const inputUpdatePassword = {
     body: {
