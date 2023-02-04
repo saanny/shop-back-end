@@ -1,28 +1,29 @@
-import express, { Application } from "express";
+import { InversifyExpressServer } from 'inversify-express-utils'
 import boot from "./boot";
 import "./infrastructure/connections/mongoose";
 import notFoundHandler from "./middlewares/404";
 import HumanErrorHandleing from "./middlewares/HumanErrorHandeling";
-import RouteService from "./router/routeService";
+import { container } from './di-container'
+
 
 class App {
-    public app: Application;
-    private router: RouteService;
     public port: number;
 
     constructor(port: number) {
-        this.app = express();
         this.port = port;
-        this.router = new RouteService(this.app);
     }
 
     public start(): void {
-        boot(this.app);
-        this.router.run();
-        notFoundHandler(this.app);
-        HumanErrorHandleing(this.app);
+        const server = new InversifyExpressServer(container);
 
-        this.app.listen(this.port, () => {
+        server.setConfig((app) => {
+            boot(app);
+            // notFoundHandler(app);
+            HumanErrorHandleing(app);
+        })
+        const app = server.build();
+
+        app.listen(this.port, () => {
             console.log(`app is running on port ${this.port}`);
         });
     }

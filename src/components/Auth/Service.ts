@@ -7,7 +7,8 @@ import { UpdatePasswordDTO } from "./dto/updatePasswordDTO";
 import { ForgotPasswordDTO } from './dto/forgotPasswordDTO';
 import { RegisterUserDTO } from "./dto/registerUserDTO";
 import crypto from 'crypto'
-
+import { injectable } from "inversify";
+@injectable()
 export default class AuthService {
 
     constructor(private userRepository: UserMongoRepository) { }

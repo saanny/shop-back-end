@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
+import { injectable } from "inversify";
 import IPagination from "../../contracts/IPagination";
 import IAddress from "../model/IAddress";
 import IUser from "../model/IUser";
 import UserModel from "../model/User";
 import IUserRepository from "../repositories/IUserRepository";
+@injectable()
 export default class UserMongoRepository implements IUserRepository {
     public async findOne(ID: string): Promise<IUser | null> {
         return UserModel.findById(ID).select("+password");
