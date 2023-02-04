@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { controller, httpGet, httpPatch, httpPost } from "inversify-express-utils";
-import { createAndSendToken } from "../../services/AuthService";
+import { createAndSendToken, getMe, protect } from "../../services/AuthService";
 import AuthService from "./Service";
 @controller('/api/v1/auth')
 export default class AuthController {
@@ -9,12 +9,9 @@ export default class AuthController {
     constructor(private readonly userService: AuthService) { }
 
 
-    public getMe(req: any, res: Response, next: NextFunction) {
-        req.params.id = req.user.id;
-        next();
-    };
 
-    @httpGet('/me')
+
+    @httpGet('/me', protect(), getMe())
     public async getUser(req: Request, res: Response, next: NextFunction) {
 
         const result = await this.userService.getUser({ id: req.params.id })

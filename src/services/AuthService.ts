@@ -34,8 +34,8 @@ export const createAndSendToken = (
 
 const usersRepository: IUserRepository = new UsersRepository();
 
-export const protect = catchAsync(
-    async (req: any, res: Response, next: NextFunction) => {
+export function protect() {
+    return async (req: any, res: Response, next: NextFunction) => {
         let token;
         if (
             req.headers.authorization &&
@@ -60,4 +60,13 @@ export const protect = catchAsync(
 
         next();
     }
-);
+}
+
+
+
+export function getMe() {
+    return (req: any, res: Response, next: NextFunction) => {
+        req.params.id = req.user.id;
+        next();
+    }
+};
