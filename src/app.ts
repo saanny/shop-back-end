@@ -18,9 +18,12 @@ class App {
 
         server.setConfig((app) => {
             boot(app);
-            // notFoundHandler(app);
+        });
+
+        server.setErrorConfig((app) => {
+            notFoundHandler(app);
             HumanErrorHandleing(app);
-        })
+        });
         const app = server.build();
 
         app.listen(this.port, () => {
