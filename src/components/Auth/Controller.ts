@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { controller, httpGet, httpPatch, httpPost } from "inversify-express-utils";
 import { createAndSendToken, getMe, protect } from "../../services/AuthService";
+import { inputValidator } from "../../utils/InputValidator";
 import AuthService from "./Service";
+import { inputForgotPassword, inputLogin, inputRegister, inputResetPassword, inputUpdatePassword } from "./ValidationSchema";
 @controller('/api/v1/auth')
 export default class AuthController {
 
-
     constructor(private readonly userService: AuthService) { }
-
-
-
 
     @httpGet('/me', protect(), getMe())
     public async getUser(req: Request, res: Response, next: NextFunction) {
@@ -25,7 +23,7 @@ export default class AuthController {
 
     }
 
-    @httpPost('/register')
+    @httpPost('/register', inputValidator(inputRegister))
     public async register(req: Request, res: Response, next: NextFunction) {
 
         const result = this.userService.register(req.body);
@@ -36,11 +34,9 @@ export default class AuthController {
             },
         });
 
-
-
     }
 
-    @httpPost('/login')
+    @httpPost('/login', inputValidator(inputLogin))
     public async login(req: Request, res: Response, next: NextFunction) {
 
         const user = this.userService.login(req.body);
@@ -48,7 +44,7 @@ export default class AuthController {
         createAndSendToken(user, 200, res);
     }
 
-    @httpPatch("/update-password")
+    @httpPatch("/update-password", inputValidator(inputUpdatePassword))
     public async updatePassword(req: any, res: Response, next: NextFunction) {
 
         const user = this.userService.updatePassword({
@@ -58,12 +54,9 @@ export default class AuthController {
         })
 
         createAndSendToken(user, 200, res);
-
     }
 
-
-
-    @httpPost('/forgot-password')
+    @httpPost('/forgot-password', inputValidator(inputForgotPassword))
     public async forgotPassword(req: Request, res: Response, next: NextFunction) {
 
         const sendForgotPasswordEmail = await this.userService.forgotPassword({
@@ -74,11 +67,9 @@ export default class AuthController {
             message: "ایمیل فراموشی پسورد ارسال شد",
         });
 
-
-
     }
 
-    @httpPost("/rest-password/:token")
+    @httpPost("/rest-password/:token", inputValidator(inputResetPassword))
     public async resetPassword(req: Request, res: Response, next: NextFunction) {
 
         const user = await this.userService.resetPassword({
@@ -88,11 +79,6 @@ export default class AuthController {
 
         createAndSendToken(user, 200, res);
 
-
     }
-
-
-
-
 
 }
