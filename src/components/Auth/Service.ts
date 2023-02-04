@@ -1,12 +1,13 @@
 import AppError from "../../utils/AppError";
 import UserMongoRepository from "../users/repositories/UserMongoRepository";
-import { GetUserDTO } from "./dto/getUserDto";
+import { GetUserDTO } from "./dto/getUserDTO";
 import { LoginDTO } from "./dto/loginDTO";
-import { RegisterUserDTO } from "./dto/registerUserDto";
-import { UpdatePasswordDTO } from "./dto/updatePasswordDTO";
-import { ForgotPasswordDTO } from './dto/forgotPasswordDTO'
 import { ResetPasswordDTO } from "./dto/resetPasswordDTO";
+import { UpdatePasswordDTO } from "./dto/updatePasswordDTO";
+import { ForgotPasswordDTO } from './dto/forgotPasswordDTO';
+import { RegisterUserDTO } from "./dto/registerUserDTO";
 import crypto from 'crypto'
+
 export default class AuthService {
 
     constructor(private userRepository: UserMongoRepository) { }
