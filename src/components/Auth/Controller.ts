@@ -9,10 +9,10 @@ export default class AuthController {
 
     constructor(private readonly userService: AuthService) { }
 
-    @httpGet('/me', protect(), getMe())
-    public async getUser(req: Request, res: Response, next: NextFunction) {
+    @httpGet('/me', protect, getMe)
+    public async getUser(req: any, res: Response, next: NextFunction) {
 
-        const result = await this.userService.getUser({ id: req.params.id })
+        const result = await this.userService.getUser({ id: req.user.id })
 
         res.status(200).json({
             status: "success",
@@ -26,7 +26,7 @@ export default class AuthController {
     @httpPost('/register', inputValidator(inputRegister))
     public async register(req: Request, res: Response, next: NextFunction) {
 
-        const result = this.userService.register(req.body);
+        const result = await this.userService.register(req.body);
         res.status(201).json({
             status: "success",
             data: {
@@ -39,7 +39,7 @@ export default class AuthController {
     @httpPost('/login', inputValidator(inputLogin))
     public async login(req: Request, res: Response, next: NextFunction) {
 
-        const user = this.userService.login(req.body);
+        const user = await this.userService.login(req.body);
 
         createAndSendToken(user, 200, res);
     }
@@ -47,7 +47,7 @@ export default class AuthController {
     @httpPatch("/update-password", inputValidator(inputUpdatePassword))
     public async updatePassword(req: any, res: Response, next: NextFunction) {
 
-        const user = this.userService.updatePassword({
+        const user = await this.userService.updatePassword({
             userId: req.user.id,
             passwordCurrect: req.body.passwordCurrect,
             password: req.body.password
