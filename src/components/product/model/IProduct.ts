@@ -10,5 +10,5 @@ export default interface IProduct extends Document {
     category: string;
     created_at: Date;
     updated_at: Date;
-    status: ProductStatus;
+    // status: ProductStatus;
 }

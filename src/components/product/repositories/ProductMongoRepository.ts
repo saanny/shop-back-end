@@ -5,7 +5,8 @@ import { Types } from "mongoose";
 import IPagination from "../../contracts/IPagination";
 import ProductStatus from "../model/ProductStatus";
 import IProductRepository from "./IProductRepository";
-
+import { injectable } from "inversify";
+@injectable()
 export default class ProductMongoRepository implements IProductRepository {
 
     public async findOne(
