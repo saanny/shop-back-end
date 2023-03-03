@@ -1,4 +1,7 @@
 {
+	"ts-node": {
+		"require": ["tsconfig-paths/register"]
+	  },
 	"compilerOptions": {
 		/* Visit https://aka.ms/tsconfig.json to read more about this file */
 		/* Basic Options */
@@ -23,7 +26,7 @@
 		// "downlevelIteration": true,            /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */
 		// "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
 		/* Strict Type-Checking Options */
-		"strict": true, /* Enable all strict type-checking options. */
+		"strict": false, /* Enable all strict type-checking options. */
 		// "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
 		// "strictNullChecks": true,              /* Enable strict null checks. */
 		// "strictFunctionTypes": true,           /* Enable strict checking of function types. */
@@ -38,23 +41,24 @@
 		// "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
 		// "noUncheckedIndexedAccess": true,      /* Include 'undefined' in index signature results */
 		/* Module Resolution Options */
+		
 		"moduleResolution": "node", /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
-		"baseUrl": ".", /* Base directory to resolve non-absolute module names. */
+		"baseUrl": "./src", /* Base directory to resolve non-absolute module names. */
 		"paths": {
 			"@Components/*": [
-				"src/components/*"
+				"components/*"
 			],
 			"@Middlewares/*": [
-				"src/middlewares/*"
+				"middlewares/*"
 			],
 			"@Services/*": [
-				"src/services/*"
+				"services/*"
 			],
 			"@Utils/*": [
-				"src/utils/*"
+				"utils/*"
 			],
       "@Boot/*": [
-				"src/boot/*"
+				"boot/*"
 			],
 		},
 		// "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
