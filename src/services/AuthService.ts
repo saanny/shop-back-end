@@ -21,7 +21,7 @@ export const createAndSendToken = (
   statusCode: any,
   res: Response
 ) => {
-  const token = signToken(user._id)
+  const token = signToken(user?._id)
 
   user.password = undefined
 
@@ -60,6 +60,6 @@ export async function protect(req: any, res: Response, next: NextFunction) {
 }
 
 export function getMe(req: any, res: Response, next: NextFunction) {
-  req.params.id = req.user.id
+  req.params.id = req.user?.id
   next()
 }
