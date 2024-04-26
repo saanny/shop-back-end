@@ -14,7 +14,7 @@ class App {
     }
 
     public start(): void {
-        const server = new InversifyExpressServer(container);
+        const server = new InversifyExpressServer(container); 
 
         server.setConfig((app) => {
             boot(app);

@@ -4,6 +4,7 @@ import express, { Application } from "express";
 import mongoSanitize from "express-mongo-sanitize";
 import path, { resolve } from "path";
 import morgan from 'morgan'
+import * as swagger from "swagger-express-ts";
 
 const corsOptions = {
     origin: "*",
@@ -17,7 +18,8 @@ export default function boot(app: Application) {
     app.set("view engine", "pug");
     app.set("views", express.static(path.join(__dirname, "../../views")));
     app.use(morgan("dev"))
-
+    app.use( '/api-docs/swagger' , express.static(path.join(__dirname, "../swagger")  ) );
+    app.use( '/api-docs/swagger/assets' , express.static( path.join(__dirname, "../../node_modules/swagger-ui-dist")) );
     app.use(bodyParser.json());
 
     app.use(
@@ -27,5 +29,19 @@ export default function boot(app: Application) {
     );
     app.use(cors(corsOptions));
     app.use(mongoSanitize());
+    app.use( swagger.express(
+        {
+            definition : {
+                info : {
+                    title : "My api" ,
+                    version : "1.0"
+                } ,
+                externalDocs : {
+                    url : ""
+                }
+                // Models can be defined here
+            }
+        }
+    ) );
 
 }

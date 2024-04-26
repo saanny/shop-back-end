@@ -4,11 +4,29 @@ import { createAndSendToken, getMe, protect } from "../../services/AuthService";
 import { inputValidator } from "../../utils/InputValidator";
 import AuthService from "./Service";
 import { inputForgotPassword, inputLogin, inputRegister, inputResetPassword, inputUpdatePassword } from "./ValidationSchema";
+import { ApiOperationGet, ApiPath } from "@inversify-cn/swagger-express-ts";
+import { SwaggerDefinitionConstant } from "swagger-express-ts";
+import { injectable } from "inversify";
+
+@ApiPath({
+    path: "/api/v1/auth",
+    name: "Auth",
+    security: { basicAuth: [] }
+})
 @controller('/api/v1/auth')
 export default class AuthController {
 
     constructor(private readonly userService: AuthService) { }
-
+     @ApiOperationGet({
+        description: "Get versions objects list",
+        summary: "Get versions list",
+        responses: {
+            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Version" }
+        },
+        security: {
+            apiKeyHeader: []
+        }
+    })
     @httpGet('/me', protect, getMe)
     public async getUser(req: any, res: Response, next: NextFunction) {
 
